@@ -32,19 +32,35 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: #000;
+      background: radial-gradient(circle, #1f1f1f, #000);
       display: flex;
       justify-content: center;
       align-items: center;
       z-index: 9999;
-      animation: fadeOut 1s ease-out 2s forwards;
+      animation: fadeOut 1s ease-out 3s forwards;
+      flex-direction: column;
+    }
+
+    .loader-ring {
+      width: 80px;
+      height: 80px;
+      border: 8px solid transparent;
+      border-top: 8px solid #00c6ff;
+      border-radius: 50%;
+      animation: spin 1.5s linear infinite;
+      margin-bottom: 20px;
     }
 
     .loader h1 {
-      font-size: 3rem;
+      font-size: 2rem;
       background: linear-gradient(90deg, #00c6ff, #0072ff);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     @keyframes fadeOut {
@@ -63,7 +79,7 @@
       justify-content: center;
       height: 100vh;
       text-align: center;
-      animation: fadeIn 1s ease-out 2.5s forwards;
+      animation: fadeIn 1s ease-out 3.5s forwards, float 6s ease-in-out infinite;
       opacity: 0;
     }
 
@@ -73,19 +89,12 @@
       }
     }
 
-    .logo {
-      width: 120px;
-      animation: popIn 1s ease forwards;
-    }
-
-    @keyframes popIn {
-      0% {
-        transform: scale(0.5);
-        opacity: 0;
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
       }
-      100% {
-        transform: scale(1);
-        opacity: 1;
+      50% {
+        transform: translateY(-10px);
       }
     }
 
@@ -96,37 +105,73 @@
       line-height: 2.5rem;
       color: #f0f0f0;
       text-shadow: 0 0 10px #0072ff;
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      0% {
+        text-shadow: 0 0 10px #00c6ff;
+      }
+      100% {
+        text-shadow: 0 0 20px #0072ff;
+      }
+    }
+
+    .qris-container {
+      position: relative;
+      margin-top: 40px;
+    }
+
+    .qris-container::before {
+      content: "";
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      border-radius: 20px;
+      background: linear-gradient(45deg, red, orange, yellow, green, cyan, blue, violet);
+      background-size: 400% 400%;
+      animation: borderAnimation 8s ease infinite;
+      z-index: -1;
+    }
+
+    @keyframes borderAnimation {
+      0% {
+        background-position: 0% 50%;
+      }
+      50% {
+        background-position: 100% 50%;
+      }
+      100% {
+        background-position: 0% 50%;
+      }
     }
 
     .qris {
-      margin-top: 30px;
       width: 220px;
-      border-radius: 10px;
-      box-shadow: 0 0 25px #00c6ff;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-    }
-
-    .qris:hover {
-      transform: scale(1.08);
-      box-shadow: 0 0 35px #00c6ff;
+      border-radius: 20px;
+      display: block;
     }
   </style>
 </head>
 <body>
   <div class="loader">
+    <div class="loader-ring"></div>
     <h1>PAYMENT ACCEL</h1>
   </div>
 
   <canvas id="particles"></canvas>
 
   <div class="container">
-    <img src="https://logodownload.org/wp-content/uploads/2021/03/dana-logo-0.png" class="logo" alt="Dana Logo">
     <div class="text">
-      0895-3171-5547<br>
-      OVO<br>
-      GOPAY
+      Dana: 0895-3171-5547<br>
+      OVO: 0895-3171-5547<br>
+      GOPAY: 0895-3171-5547
     </div>
-    <img src="https://files.catbox.moe/ubqguv.png" class="qris" alt="QRIS Code">
+    <div class="qris-container">
+      <img src="https://files.catbox.moe/ubqguv.png" class="qris" alt="QRIS Code">
+    </div>
   </div>
 
   <script>
@@ -187,4 +232,4 @@
     });
   </script>
 </body>
-</
+</html>
